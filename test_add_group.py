@@ -12,11 +12,9 @@ class TestAddGroup(unittest.TestCase):
         dw.get("http://localhost/addressbook")
 
     def login(self, dw, username, password):
-        dw.find_element_by_name("user").clear()
         dw.find_element_by_name("user").send_keys(username)
-        dw.find_element_by_name("pass").clear()
         dw.find_element_by_name("pass").send_keys(password)
-        dw.find_element_by_xpath("//input[type=\"submit\"]").click()
+        dw.find_element_by_css_selector("input[type=\"Submit\"]").click()
 
     def open_groups_page(self, dw):
         dw.find_element_by_link_text("groups").click()
@@ -25,14 +23,8 @@ class TestAddGroup(unittest.TestCase):
         # init group creation
         dw.find_element_by_name("new").click()
         # fill out group form
-        dw.find_element_by_name("group_name").click()
-        dw.find_element_by_name("group_name").clear()
         dw.find_element_by_name("group_name").send_keys(group.name)
-        dw.find_element_by_name("group_header").click()
-        dw.find_element_by_name("group_header").clear()
         dw.find_element_by_name("group_header").send_keys(group.header)
-        dw.find_element_by_name("group_footer").click()
-        dw.find_element_by_name("group_footer").clear()
         dw.find_element_by_name("group_footer").send_keys(group.footer)
         # submit group form creation
         dw.find_element_by_name("submit").click()
