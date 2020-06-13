@@ -19,8 +19,10 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d01a6f2e-4475-4be9-9c19-74a04d74a010" name="Default Changelist" comment="Изменён локатор">
+    <list default="true" id="d01a6f2e-4475-4be9-9c19-74a04d74a010" name="Default Changelist" comment="Создан тест add_contact">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_add_contact.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_add_contact.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_add_group.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_add_group.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,9 +121,9 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python tests.pytest in test_add_contact.py" />
+        <item itemvalue="Python tests.pytest in test_add_group.py" />
         <item itemvalue="Python tests.pytest for 2test_add_contact.TestAddContact.test_add_empty_contact" />
         <item itemvalue="Python tests.pytest in 2test_add_contact.py" />
-        <item itemvalue="Python tests.pytest in test_add_group.py" />
       </list>
     </recent_temporary>
   </component>
@@ -150,7 +152,14 @@
       <option name="project" value="LOCAL" />
       <updated>1591500575992</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Создан тест add_contact">
+      <created>1591571856883</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1591571856883</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,37 +177,38 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Выделены вспомогательные методы и классы" />
     <MESSAGE value="Изменён локатор" />
-    <option name="LAST_COMMIT_MESSAGE" value="Изменён локатор" />
+    <MESSAGE value="Создан тест add_contact" />
+    <option name="LAST_COMMIT_MESSAGE" value="Создан тест add_contact" />
   </component>
   <component name="WindowStateProjectService">
     <state x="465" y="123" key="FileChooserDialogImpl" timestamp="1591499158081">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="465" y="123" key="FileChooserDialogImpl/0.0.1366.738@0.0.1366.738" timestamp="1591499158081" />
-    <state width="1308" height="203" key="GridCell.Tab.0.bottom" timestamp="1591571656585">
+    <state width="1345" height="184" key="GridCell.Tab.0.bottom" timestamp="1592014305811">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1308" height="203" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1591571656585" />
-    <state width="1308" height="203" key="GridCell.Tab.0.center" timestamp="1591571656584">
+    <state width="1345" height="184" key="GridCell.Tab.0.bottom/0.0.1366.738@0.0.1366.738" timestamp="1592014305811" />
+    <state width="1345" height="184" key="GridCell.Tab.0.center" timestamp="1592014305811">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1308" height="203" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1591571656584" />
-    <state width="1308" height="203" key="GridCell.Tab.0.left" timestamp="1591571656584">
+    <state width="1345" height="184" key="GridCell.Tab.0.center/0.0.1366.738@0.0.1366.738" timestamp="1592014305811" />
+    <state width="1345" height="184" key="GridCell.Tab.0.left" timestamp="1592014305811">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1308" height="203" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1591571656584" />
-    <state width="1308" height="203" key="GridCell.Tab.0.right" timestamp="1591571656585">
+    <state width="1345" height="184" key="GridCell.Tab.0.left/0.0.1366.738@0.0.1366.738" timestamp="1592014305811" />
+    <state width="1345" height="184" key="GridCell.Tab.0.right" timestamp="1592014305811">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state width="1308" height="203" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1591571656585" />
+    <state width="1345" height="184" key="GridCell.Tab.0.right/0.0.1366.738@0.0.1366.738" timestamp="1592014305811" />
     <state x="189" y="14" key="SettingsEditor" timestamp="1591482154532">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
     <state x="189" y="14" key="SettingsEditor/0.0.1366.738@0.0.1366.738" timestamp="1591482154532" />
-    <state x="259" y="138" key="Vcs.Push.Dialog.v2" timestamp="1591500601207">
+    <state x="259" y="138" key="Vcs.Push.Dialog.v2" timestamp="1591571877660">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
-    <state x="259" y="138" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1591500601207" />
+    <state x="259" y="138" key="Vcs.Push.Dialog.v2/0.0.1366.738@0.0.1366.738" timestamp="1591571877660" />
     <state x="112" y="100" width="1146" height="538" key="com.intellij.history.integration.ui.views.FileHistoryDialog" timestamp="1591498788035">
       <screen x="0" y="0" width="1366" height="738" />
     </state>
