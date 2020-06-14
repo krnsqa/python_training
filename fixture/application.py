@@ -1,5 +1,5 @@
 from selenium import webdriver
-
+from fixture.session import SessionHelper
 
 
 class Application:
@@ -7,21 +7,18 @@ class Application:
     def __init__(self):
         self.dw = webdriver.Firefox()
         self.dw.implicitly_wait(60)
+        self.session = SessionHelper(self)
+
 
     def open_home_page(self):
         dw = self.dw
         dw.get("http://localhost/addressbook")
 
-    def login(self, username, password):
-        dw = self.dw
-        self.open_home_page()
-        dw.find_element_by_name("user").send_keys(username)
-        dw.find_element_by_name("pass").send_keys(password)
-        dw.find_element_by_css_selector("input[type=\"Submit\"]").click()
 
     def open_groups_page(self):
         dw = self.dw
         dw.find_element_by_link_text("groups").click()
+
 
     def create_group(self, group):
         dw = self.dw
@@ -36,13 +33,11 @@ class Application:
         dw.find_element_by_name("submit").click()
         self.return_to_groups_page()
 
+
     def return_to_groups_page(self):
         dw = self.dw
         dw.find_element_by_link_text("group page").click()
 
-    def logout(self):
-        dw = self.dw
-        dw.find_element_by_link_text("Logout").click()
 
     def destroy(self):
         self.dw.quit()
@@ -63,6 +58,7 @@ class Application:
         # submit contact form
         dw.find_element_by_name("submit").click()
         self.return_to_homepage()
+
 
     def return_to_homepage(self):
         dw = self.dw
