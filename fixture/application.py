@@ -8,7 +8,7 @@ class Application:
 
     def __init__(self):
         self.dw = webdriver.Firefox()
-        self.dw.implicitly_wait(30)
+        self.dw.implicitly_wait(60)
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
