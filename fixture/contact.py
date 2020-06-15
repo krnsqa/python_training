@@ -26,3 +26,13 @@ class ContactHelper:
     def return_to_homepage(self):
         dw = self.app.dw
         dw.find_element_by_link_text("home").click()
+
+
+    def delete_first_contact(self):
+        dw = self.app.dw
+        # select first contact
+        dw.find_element_by_name("selected[]").click()
+        # submit deletion
+        dw.find_element_by_css_selector("input[value=\"Delete\"]").click()
+        # confirm deletion
+        dw.switch_to_alert().accept()
