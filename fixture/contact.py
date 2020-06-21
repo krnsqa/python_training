@@ -70,3 +70,9 @@ class ContactHelper:
         # submit modification
         dw.find_element_by_name("update").click()
         self.return_to_homepage()
+
+
+    def count(self):
+        dw = self.app.dw
+        self.open_homepage()
+        return len(dw.find_elements_by_name("selected[]"))
