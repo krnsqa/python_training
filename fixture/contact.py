@@ -6,19 +6,30 @@ class ContactHelper:
         self.app = app
 
 
+    def change_field_value(self, field_name, text):
+        dw = self.app.dw
+        if text is not None:
+            dw.find_element_by_name(field_name).clear()
+            dw.find_element_by_name(field_name).send_keys(text)
+
+
     def fill_contact_form(self, contact):
         dw = self.app.dw
-        dw.find_element_by_name("firstname").send_keys(contact.firstname)
-        dw.find_element_by_name("lastname").send_keys(contact.lastname)
-        dw.find_element_by_name("address").send_keys(contact.address)
-        dw.find_element_by_name("mobile").send_keys(contact.mobile)
-        dw.find_element_by_name("email").send_keys(contact.email)
-        dw.find_element_by_name("bday").send_keys(contact.bday)
-        dw.find_element_by_name("bmonth").send_keys(contact.bmonth)
+        self.change_field_value("firstname", contact.firstname)
+        self.change_field_value("lastname", contact.lastname)
+        self.change_field_value("address", contact.address)
+        self.change_field_value("mobile", contact.mobile)
+        self.change_field_value("email", contact.email)
+
+
+    def open_homepage(self):
+        dw = self.app.dw
+        dw.find_element_by_link_text("home").click()
 
 
     def create(self, contact):
         dw = self.app.dw
+        self.open_homepage()
         # init contact creation
         dw.find_element_by_link_text("add new").click()
         self.fill_contact_form(contact)
@@ -32,34 +43,30 @@ class ContactHelper:
         dw.find_element_by_link_text("home").click()
 
 
+    def select_first_contact(self):
+        dw = self.app.dw
+        dw.find_element_by_name("selected[]").click()
+
+
     def delete_first_contact(self):
         dw = self.app.dw
-        # select first contact
-        dw.find_element_by_name("selected[]").click()
+        self.open_homepage()
+        self.select_first_contact()
         # submit deletion
         dw.find_element_by_css_selector("input[value=\"Delete\"]").click()
         # confirm deletion
         dw.switch_to_alert().accept()
+        self.return_to_homepage()
 
 
-    def clear_contact_form(self):
+    def modify_first_contact(self, new_contact_data):
         dw = self.app.dw
-        dw.find_element_by_name("firstname").clear()
-        dw.find_element_by_name("lastname").clear()
-        dw.find_element_by_name("address").clear()
-        dw.find_element_by_name("mobile").clear()
-        dw.find_element_by_name("email").clear()
-        dw.find_element_by_name("bday").send_keys("")
-        dw.find_element_by_name("bmonth").send_keys("")
-
-
-    def edit_first_contact(self, contact):
-        dw = self.app.dw
-        # select first contact
+        self.open_homepage()
+        self.select_first_contact()
+        # open modification form
         dw.find_element_by_css_selector("#maintable a[href^='edit']").click()
-        # clear edit contact form
-        self.clear_contact_form()
-        self.fill_contact_form(contact)
-        # submit edit contact form
+        # fill out group form
+        self.fill_contact_form(new_contact_data)
+        # submit modification
         dw.find_element_by_name("update").click()
         self.return_to_homepage()
