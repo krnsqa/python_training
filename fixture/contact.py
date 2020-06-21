@@ -24,7 +24,8 @@ class ContactHelper:
 
     def open_homepage(self):
         dw = self.app.dw
-        dw.find_element_by_link_text("home").click()
+        if not (dw.current_url.endswith("/addressbook/")):
+            dw.find_element_by_link_text("home").click()
 
 
     def create(self, contact):
