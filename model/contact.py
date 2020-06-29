@@ -13,16 +13,13 @@ class Contact:
 
 
     def __repr__(self):
-        return "%s:%s:%s:%s:%s:%s" % (self.id, self.firstname, self.lastname,  self.address, self.mobile, self.email,)
+        return "%s:%s:%s" % (self.id, self.firstname, self.lastname)
 
 
     def __eq__(self, other):
         return ((self.id is None or other.id is None or self.id == other.id) and
                 self.firstname == other.firstname and
-                self.lastname == other.lastname and
-                self.address == other.address and
-                self.mobile == other.mobile and
-                self.email == other.email)
+                self.lastname == other.lastname)
 
 
 
