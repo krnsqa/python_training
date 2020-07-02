@@ -83,8 +83,8 @@ class ContactHelper:
         self.open_homepage()
         self.select_contact_by_index(index)
         # open modification form
-        dw.find_element_by_css_selector("#maintable a[href^='edit']").click()
-        # fill out group form
+        dw.find_elements_by_css_selector("#maintable a[href^='edit']")[index].click()
+        # fill out contact form
         self.fill_contact_form(new_contact_data)
         # submit modification
         dw.find_element_by_name("update").click()
