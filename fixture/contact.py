@@ -1,4 +1,5 @@
 from model.contact import Contact
+import re
 
 
 class ContactHelper:
@@ -19,8 +20,12 @@ class ContactHelper:
         self.change_field_value("firstname", contact.firstname)
         self.change_field_value("lastname", contact.lastname)
         self.change_field_value("address", contact.address)
+        self.change_field_value("home", contact.homephone)
         self.change_field_value("mobile", contact.mobile)
+        self.change_field_value("work", contact.workphone)
         self.change_field_value("email", contact.email)
+        self.change_field_value("phone2", contact.secondaryphone)
+
 
 
     def open_homepage(self):
@@ -66,7 +71,7 @@ class ContactHelper:
         self.open_homepage()
         self.select_contact_by_index(index)
         # submit deletion
-        dw.find_element_by_css_selector("input[value=\"Delete\"]").click()
+        dw.find_element_by_css_selector("input[value='Delete']").click()
         # confirm deletion
         dw.switch_to_alert().accept()
         self.return_to_homepage()
@@ -107,8 +112,59 @@ class ContactHelper:
             self.open_homepage()
             self.contact_cache = []
             rows = dw.find_elements_by_css_selector("tr[name='entry']")
-            for element in rows:
-                id = element.find_element_by_name("selected[]").get_attribute("value")
-                cells = element.find_elements_by_tag_name("td")
-                self.contact_cache.append(Contact(id=id, firstname=cells[2].text, lastname=cells[1].text))
+            for row in rows:
+                cells = row.find_elements_by_tag_name("td")
+                firstname = cells[2].text
+                lastname = cells[1].text
+                id = cells[0].find_element_by_name("selected[]").get_attribute("value")
+                all_phones = cells[5].text.splitlines()
+                self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname,
+                                                  homephone=all_phones[0], mobile=all_phones[1],
+                                                  workphone=all_phones[2], secondaryphone=all_phones[3]))
         return list(self.contact_cache)
+
+
+    def open_contacts_to_edit_by_index(self, index):
+        dw = self.app.dw
+        self.open_homepage()
+        row = dw.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[7]
+        cell.find_element_by_tag_name("a").click()
+
+
+    def open_contact_view_by_index(self, index):
+        dw = self.app.dw
+        self.open_homepage()
+        row = dw.find_elements_by_name("entry")[index]
+        cell = row.find_elements_by_tag_name("td")[6]
+        cell.find_element_by_tag_name("a").click()
+
+
+    def get_contact_info_from_edit_page(self, index):
+        dw = self.app.dw
+        self.open_contacts_to_edit_by_index(index)
+        firstname = dw.find_element_by_name("firstname").get_attribute("value")
+        lastname = dw.find_element_by_name("lastname").get_attribute("value")
+        id = dw.find_element_by_name("id").get_attribute("value")
+        homephone = dw.find_element_by_name("home").get_attribute("value")
+        mobile = dw.find_element_by_name("mobile").get_attribute("value")
+        workphone = dw.find_element_by_name("work").get_attribute("value")
+        secondaryphone = dw.find_element_by_name("phone2").get_attribute("value")
+        return Contact(firstname=firstname, lastname=lastname, id=id,
+                       homephone=homephone, mobile=mobile,
+                       workphone=workphone, secondaryphone=secondaryphone)
+
+
+    def get_contact_from_view_page(self, index):
+        dw = self.app.dw
+        self.open_contact_view_by_index(index)
+        text = dw.find_element_by_id("content").text
+        homephone = re.search("H: (.*)", text).group(1)
+        mobile = re.search("M: (.*)", text).group(1)
+        workphone = re.search("W: (.*)", text).group(1)
+        secondaryphone = re.search("P: (.*)", text).group(1)
+        return Contact(homephone=homephone, mobile=mobile,
+                       workphone=workphone, secondaryphone=secondaryphone)
+
+
+
