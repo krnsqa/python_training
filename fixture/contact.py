@@ -114,13 +114,19 @@ class ContactHelper:
             rows = dw.find_elements_by_css_selector("tr[name='entry']")
             for row in rows:
                 cells = row.find_elements_by_tag_name("td")
+                id = cells[0].find_element_by_name("selected[]").get_attribute("value")
                 firstname = cells[2].text
                 lastname = cells[1].text
-                id = cells[0].find_element_by_name("selected[]").get_attribute("value")
+                all_emails = cells[4].text
                 all_phones = cells[5].text
                 self.contact_cache.append(Contact(id=id, firstname=firstname, lastname=lastname,
-                                                  all_phones_from_homepage=all_phones))
+                                                  all_emails_from_homepage=all_emails, all_phones_from_homepage=all_phones))
         return list(self.contact_cache)
+
+
+    def get_contact_from_contact_list_by_index(self, index, contact_cache):
+        self.contact_cache_by_index = contact_cache[index]
+        return (self.contact_cache_by_index)
 
 
     def open_contacts_to_edit_by_index(self, index):
@@ -145,13 +151,16 @@ class ContactHelper:
         firstname = dw.find_element_by_name("firstname").get_attribute("value")
         lastname = dw.find_element_by_name("lastname").get_attribute("value")
         id = dw.find_element_by_name("id").get_attribute("value")
+        email = dw.find_element_by_name("email").get_attribute("value")
+        email2 = dw.find_element_by_name("email2").get_attribute("value")
+        email3 = dw.find_element_by_name("email3").get_attribute("value")
         homephone = dw.find_element_by_name("home").get_attribute("value")
         mobile = dw.find_element_by_name("mobile").get_attribute("value")
         workphone = dw.find_element_by_name("work").get_attribute("value")
         secondaryphone = dw.find_element_by_name("phone2").get_attribute("value")
         return Contact(firstname=firstname, lastname=lastname, id=id,
-                       homephone=homephone, mobile=mobile,
-                       workphone=workphone, secondaryphone=secondaryphone)
+                       email=email, email2=email2, email3=email3,
+                       homephone=homephone, mobile=mobile, workphone=workphone, secondaryphone=secondaryphone)
 
 
     def get_contact_from_view_page(self, index):
