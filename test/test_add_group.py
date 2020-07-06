@@ -20,14 +20,14 @@ def random_string(prefix, maxlen):
 
 
 #OR
-testdata = [Group(name="", header="", footer="")] + [
-    Group(name=random_string("name", 16), header=random_string("header", 15), footer=random_string("footer", 13))
-    for i in range(3)]
+#testdata = [Group(name="", header="", footer="")] + [
+    #Group(name=random_string("name", 16), header=random_string("header", 15), footer=random_string("footer", 13))
+    #for i in range(3)]
 
 
 #OR
-#testdata = [Group(name=random_string("name", 10), header=random_string("header", 20), footer=random_string("footer", 20)),
-            #Group(name="", header="", footer="")]
+testdata = [Group(name=random_string("name", 10), header=random_string("header", 20), footer=random_string("footer", 20)),
+            Group(name="", header="", footer="")]
 
 
 @pytest.mark.parametrize("group", testdata, ids=[repr(x) for x in testdata])
