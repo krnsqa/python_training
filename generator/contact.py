@@ -1,4 +1,4 @@
-from model.group import Group
+from model.contact import Contact
 import random
 import string
 import os.path
@@ -8,14 +8,14 @@ import sys
 
 
 try:
-    opts, args = getopt.getopt(sys.argv[1:], "n:f:", ["number of groups", "file"])
+    opts, args = getopt.getopt(sys.argv[1:], "n:f:", ["number of contacts", "file"])
 except getopt.GetoptError as err:
     getopt.usage()
     sys.exit(2)
 
 
 n = 3
-f = "data/groups.json"
+f = "data/contacts.json"
 
 for o, a in opts:
     if o == "-n":
@@ -29,9 +29,10 @@ def random_string(prefix, maxlen):
     return prefix + "".join([random.choice(symbols) for i in range(random.randrange(maxlen))])
 
 
-testdata = [Group(name="", header="", footer="")] + [
-    Group(name=random_string("name", 16), header=random_string("header", 15), footer=random_string("footer", 13))
-    for i in range(n)]
+testdata = [Contact(firstname="", lastname="", address="", mobile="", email="")] + [
+    Contact(firstname=random_string("fn", 10), lastname=random_string("ln", 10), address=random_string("adr", 10),
+            homephone=random_string("hph", 10), mobile=random_string("mf", 10), workphone=random_string("wph", 10),
+            email=random_string("em", 10), secondaryphone=random_string("sp", 10)) for i in range(n)]
 
 
 file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
@@ -40,4 +41,3 @@ file = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", f)
 with open(file, "w") as out:
     jsonpickle.set_encoder_options("json", indent=2)
     out.write(jsonpickle.encode(testdata))
-
