@@ -61,6 +61,23 @@ class ContactHelper:
         dw.find_elements_by_name("selected[]")[index].click()
 
 
+    def select_contact_by_id(self, id):
+        dw = self.app.dw
+        dw.find_element_by_css_selector("input[value='%s']" % id).click()
+
+
+    def select_contact_to_edit_by_index(self, index):
+        dw = self.app.dw
+        # open modification form
+        dw.find_elements_by_css_selector("#maintable a[href^='edit']")[index].click()
+
+
+    def select_contact_to_edit_by_id(self, id):
+        dw = self.app.dw
+        # open modification form
+        dw.find_element_by_css_selector("#maintable a[href='edit.php?id=%s']" % id).click()
+
+
     def delete_first_contact(self):
         dw = self.app.dw
         self.delete_contact_by_index(0)
@@ -78,6 +95,18 @@ class ContactHelper:
         self.contact_cache = None
 
 
+    def delete_contact_by_id(self, id):
+        dw = self.app.dw
+        self.open_homepage()
+        self.select_contact_by_id(id)
+        # submit deletion
+        dw.find_element_by_css_selector("input[value='Delete']").click()
+        # confirm deletion
+        dw.switch_to_alert().accept()
+        self.return_to_homepage()
+        self.contact_cache = None
+
+
     def modify_first_contact(self):
         dw = self.app.dw
         self.modify_contact_by_index(0)
@@ -87,9 +116,19 @@ class ContactHelper:
         dw = self.app.dw
         self.open_homepage()
         self.select_contact_by_index(index)
-        # open modification form
-        dw.find_elements_by_css_selector("#maintable a[href^='edit']")[index].click()
-        # fill out contact form
+        self.select_contact_to_edit_by_index(index)
+        self.fill_contact_form(new_contact_data)
+        # submit modification
+        dw.find_element_by_name("update").click()
+        self.return_to_homepage()
+        self.contact_cache = None
+
+
+    def modify_contact_by_id(self, id, new_contact_data):
+        dw = self.app.dw
+        self.open_homepage()
+        self.select_contact_by_id(id)
+        self.select_contact_to_edit_by_id(id)
         self.fill_contact_form(new_contact_data)
         # submit modification
         dw.find_element_by_name("update").click()
