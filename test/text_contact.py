@@ -1,18 +1,24 @@
 import re
-from random import randrange
+from model.contact import Contact
 
 
-def test_any_contact_on_homepage(app):
-    contact_list = app.contact.get_contact_list()
-    index = randrange(len(contact_list))
-    contact_from_homepage = app.contact.get_contact_from_contact_list_by_index(index, contact_list)
-    contact_from_edit_page = app.contact.get_contact_info_from_edit_page(index)
-    assert contact_from_homepage.firstname == contact_from_edit_page.firstname
-    assert contact_from_homepage.lastname == contact_from_edit_page.lastname
-    assert contact_from_homepage.address == contact_from_edit_page.address
-    assert contact_from_homepage.all_emails_from_homepage == merge_emails_like_on_homepage(contact_from_edit_page)
-    assert contact_from_homepage.all_phones_from_homepage == merge_phones_like_on_homepage(contact_from_edit_page)
 
+def test_all_contacts_on_homepage(app, db):
+    ui_list = app.contact.get_contact_list()
+    def clean(contact):
+        return Contact(id=contact.id, firstname=contact.firstname.strip(), lastname=contact.lastname.strip(),
+                       address=contact.address.strip(), homephone=contact.homephone.strip(),
+                       mobile=contact.mobile.strip(), workphone=contact.workphone.strip(),
+                       email=contact.email.strip(), secondaryphone=contact.secondaryphone.strip())
+    db_list = map(clean, db.get_contact_list())
+    assert sorted(ui_list, key=Contact.id_or_max) == sorted(db_list, key=Contact.id_or_max)
+    for c in ui_list:
+        for c in db_list:
+            assert ui_list.firstname == db_list.firstname
+            assert ui_list.lastname == db_list.lastname
+            assert ui_list.address == db_list.address
+            assert ui_list.all_emails_from_homepage == merge_emails_like_on_homepage(db_list)
+            assert ui_list.all_phones_from_homepage == merge_phones_like_on_homepage(db_list)
 
 
 def merge_emails_like_on_homepage(contact):
