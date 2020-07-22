@@ -228,17 +228,13 @@ class ContactHelper:
         dw.find_element_by_id("logo").click()
 
 
-    def delete_contact_from_group(self, contact_id, group_id):
+    def delete_contact_from_group(self, group_id):
         dw = self.app.dw
         self.open_homepage()
         # add contact from group
         dw.find_element_by_name("group").click
         Select(dw.find_element_by_name("group")).select_by_value('%s' % group_id)
-        self.select_contact_by_id(contact_id)
+        self.select_first_contact()
         dw.find_element_by_css_selector(".left [name='remove']").click()
         # return to homepage
         dw.find_element_by_id("logo").click()
-
-
-
-
