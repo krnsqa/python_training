@@ -56,10 +56,18 @@ class ORMFixture:
         return self.convert_contacts_to_model(select(c for c in ORMFixture.ORMContact if c.deprecated is None))   #if = where in SQL
 
 
+    # @db_session
+    # def get_contacts_in_group(self, group):
+    #     orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
+    #     return self.convert_contacts_to_model(orm_group.contacts)
+
+
     @db_session
     def get_contacts_in_group(self, group):
         orm_group = list(select(g for g in ORMFixture.ORMGroup if g.id == group.id))[0]
-        return self.convert_contacts_to_model(orm_group.contacts)
+        orm_contacts = orm_group.contacts
+        return self.convert_contacts_to_model(
+            select(c for c in ORMFixture.ORMContact if c.deprecated is None and c in orm_contacts))
 
 
     @db_session
@@ -69,26 +77,29 @@ class ORMFixture:
             select(c for c in ORMFixture.ORMContact if c.deprecated is None and orm_group not in c.groups))
 
 
-    @db_session
-    def get_contacts_without_groups(self):
-        orm_groups = list(select(g for g in ORMFixture.ORMGroup))
-        orm_contacts = []
-        for group in orm_groups:
-            orm_contact = group.contacts
-            for contact in orm_contact:
-                orm_contacts.append(contact.id)
-        return self.convert_contacts_to_model(
-             select(c for c in ORMFixture.ORMContact if c.deprecated is None and c.id not in orm_contacts))
+################
 
+    # @db_session
+    # def get_contacts_without_groups(self):
+    #     orm_groups = list(select(g for g in ORMFixture.ORMGroup))
+    #     orm_contacts = []
+    #     for group in orm_groups:
+    #         orm_contact = group.contacts
+    #         for contact in orm_contact:
+    #             orm_contacts.append(contact.id)
+    #     return self.convert_contacts_to_model(
+    #          select(c for c in ORMFixture.ORMContact if c.deprecated is None and c.id not in orm_contacts))
+    #
+    #
+    # @db_session
+    # def get_groups_with_contacts(self):
+    #     orm_contacts = list(select(c for c in ORMFixture.ORMContact))
+    #     orm_groups = []
+    #     for contact in orm_contacts:
+    #         orm_group = contact.groups
+    #         for group in orm_group:
+    #             orm_groups.append(group.id)
+    #     return self.convert_groups_to_model(
+    #         select(g for g in ORMFixture.ORMGroup if g.id in orm_groups))
 
-    @db_session
-    def get_groups_with_contacts(self):
-        orm_contacts = list(select(c for c in ORMFixture.ORMContact))
-        orm_groups = []
-        for contact in orm_contacts:
-            orm_group = contact.groups
-            print(orm_group)
-            for group in orm_group:
-                orm_groups.append(group.id)
-        return self.convert_groups_to_model(
-            select(g for g in ORMFixture.ORMGroup if g.id in orm_groups))
+################

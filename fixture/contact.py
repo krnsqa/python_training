@@ -216,25 +216,27 @@ class ContactHelper:
                        workphone=workphone, secondaryphone=secondaryphone)
 
 
-    def add_contact_to_group(self, contact_id, group_id):
+    def add_contact_to_group(self, contact, group):
         dw = self.app.dw
         self.open_homepage()
-        self.select_contact_by_id(contact_id)
+        # select contact
+        self.select_contact_by_id(contact.id)
         # add contact to group
         dw.find_element_by_name("to_group").click
-        Select(dw.find_element_by_name("to_group")).select_by_value('%s' % group_id)
+        Select(dw.find_element_by_name("to_group")).select_by_value('%s' % group.id)
         dw.find_element_by_name("add").click()
         # return to homepage
         dw.find_element_by_id("logo").click()
 
 
-    def delete_contact_from_group(self, group_id):
+    def delete_contact_from_group(self, group, contact):
         dw = self.app.dw
         self.open_homepage()
-        # add contact from group
+        # select group
         dw.find_element_by_name("group").click
-        Select(dw.find_element_by_name("group")).select_by_value('%s' % group_id)
-        self.select_first_contact()
+        Select(dw.find_element_by_name("group")).select_by_value('%s' % group.id)
+        # select and delete contact in group
+        self.select_contact_by_id(contact.id)
         dw.find_element_by_css_selector(".left [name='remove']").click()
         # return to homepage
         dw.find_element_by_id("logo").click()
